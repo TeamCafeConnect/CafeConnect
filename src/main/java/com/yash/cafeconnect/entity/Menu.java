@@ -33,4 +33,7 @@ public class Menu {
     @JsonIgnore
     private Cafe cafe;
 
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<MenuWeeklySchedule> weeklySchedules;
 }
