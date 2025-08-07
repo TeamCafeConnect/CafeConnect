@@ -25,8 +25,6 @@ public class MenuWeeklySchedule {
     @Enumerated(EnumType.STRING)
     private DayOfWeek day;
 
-
-
     @ManyToOne
     @JoinColumn(name="menu_id")
     private Menu menu;
