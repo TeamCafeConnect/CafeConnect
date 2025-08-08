@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/public/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/auth/**", "/public/**").permitAll()
                         .requestMatchers("/customer/**").hasRole("CUSTOMER")
                         .requestMatchers("/cafe/**").hasRole("CAFE_OWNER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
