@@ -1,7 +1,7 @@
 package com.yash.cafeconnect.config;
 
 import com.yash.cafeconnect.entity.enums.UserRoles;
-import com.yash.cafeconnect.service.JwtUtils;
+import com.yash.cafeconnect.serviceImpl.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
