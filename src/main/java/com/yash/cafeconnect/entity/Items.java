@@ -27,4 +27,6 @@ public class Items {
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menu;
+
 }
+
