@@ -11,7 +11,7 @@ public class User {
     private int officeId;
     private UserRoles userRoles;
 
-    public User(String userEmailId, String userName, String mobileNo, String password, int officeId, UserRoles userRoles) {
+    public User(String userEmailId, String name, String mobileNo, String password, int officeId, UserRoles userRoles) {
         this.userEmailId = userEmailId;
         this.name = name;
         this.mobileNo = mobileNo;
