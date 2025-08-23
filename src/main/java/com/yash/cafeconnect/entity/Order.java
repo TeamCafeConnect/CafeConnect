@@ -6,13 +6,15 @@ public class Order {
     private String userEmailId;
     private String cafeId;
     private float totalAmount;
+    private double expectedDeliveryTimeInMinutes;
 
-    public Order(int orderId, String userEmailId, String cafeId, float totalAmount)
+    public Order(int orderId, String userEmailId, String cafeId, float totalAmount, double expectedDeliveryTimeInMinutes)
     {
         this.orderId = orderId;
         this.userEmailId = userEmailId;
         this.cafeId = cafeId;
         this.totalAmount = totalAmount;
+        this.expectedDeliveryTimeInMinutes = expectedDeliveryTimeInMinutes;
 
     }
 
@@ -40,5 +42,11 @@ public class Order {
     }
     public void setTotalAmount(float totalAmount) {
         this.totalAmount = totalAmount;
+    }
+    public double getExpectedDeliveryTimeInMinutes() {
+        return expectedDeliveryTimeInMinutes;
+    }
+    public void setExpectedDeliveryTimeInMinutes(double expectedDeliveryTimeInMinutes) {
+        this.expectedDeliveryTimeInMinutes = expectedDeliveryTimeInMinutes;
     }
 }
