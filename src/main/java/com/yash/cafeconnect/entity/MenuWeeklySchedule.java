@@ -1,35 +1,53 @@
 package com.yash.cafeconnect.entity;
-
-import com.yash.cafeconnect.entity.enums.MenuStatus;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.DayOfWeek;
 
-@Entity
-@Table(name="week_schedule")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class MenuWeeklySchedule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int sno;
+    private int weeklySchedueId;
     private String description;
-
-    @Enumerated(EnumType.STRING)
     private DayOfWeek day;
-
-    @ManyToOne
-    @JoinColumn(name="menu_id")
     private Menu menu;
 
-    @Enumerated(EnumType.STRING)
-    private MenuStatus status;
+    public MenuWeeklySchedule(){
 
+    }
+
+
+    public MenuWeeklySchedule(int weeklySchedueId, String description, DayOfWeek day, Menu menu) {
+        this.weeklySchedueId = weeklySchedueId;
+        this.description = description;
+        this.day = day;
+        this.menu = menu;
+    }
+
+    public int getWeeklySchedueId() {
+        return weeklySchedueId;
+    }
+
+    public void setWeeklySchedueId(int weeklySchedueId) {
+        this.weeklySchedueId = weeklySchedueId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public DayOfWeek getDay() {
+        return day;
+    }
+
+    public void setDay(DayOfWeek day) {
+        this.day = day;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 }

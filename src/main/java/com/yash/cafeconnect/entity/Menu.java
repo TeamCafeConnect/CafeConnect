@@ -1,39 +1,74 @@
 package com.yash.cafeconnect.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
-
-@Entity
-@Table(name="menu")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class Menu {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuId;
+    private int cafeId;
+     private int dishName;
+     private long price;
+     private String description;
+     private int itemId;
 
-    private String menuName;
+     public Menu(){
 
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Items> items;
+     }
+    public Menu(int menuId, int cafeId, int dishName, long price, String description, int itemId) {
+        this.menuId = menuId;
+        this.cafeId = cafeId;
+        this.dishName = dishName;
+        this.price = price;
+        this.description = description;
+        this.itemId = itemId;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "cafe_id")
-    @JsonIgnore
-    private Cafe cafe;
 
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<MenuWeeklySchedule> weeklySchedules;
+
+
+    public int getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
+    }
+
+    public int getCafeId() {
+        return cafeId;
+    }
+
+    public void setCafeId(int cafeId) {
+        this.cafeId = cafeId;
+    }
+
+    public int getDishName() {
+        return dishName;
+    }
+
+    public void setDishName(int dishName) {
+        this.dishName = dishName;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
 }
