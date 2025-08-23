@@ -1,25 +1,43 @@
 package com.yash.cafeconnect.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import java.util.List;
 
-@Entity
-@Table(name="office")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
 public class Office {
 
-    @Id
-    private String officeId;
+    private int officeId;
     private String officeName;
     private String city;
 
-    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
-    private List<User> users;
+    public Office(){}
+
+    public Office(int officeId, String officeName, String city){
+        this.officeId = officeId;
+        this.officeName = officeName;
+        this.city = city;
+    }
+
+    public int getOfficeId(){
+        return officeId;
+    }
+
+    public void setOfficeId(int officeName){
+        this.officeId = officeId;
+    }
+
+    public String getOfficeName(){
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName){
+        this.officeName = officeName;
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public void setCity(String City){
+        this.city = city;
+    }
+
 }
