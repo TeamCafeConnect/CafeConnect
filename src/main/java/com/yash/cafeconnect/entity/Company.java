@@ -1,32 +1,41 @@
 package com.yash.cafeconnect.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
-
-@Entity
-@Table(name="company")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class Company {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyId;
     private String companyName;
     private String ownerName;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Cafe> cafes;
+    public Company(int companyId, String companyName, String ownerName){
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.ownerName = ownerName;
+    }
 
+    public Company(){}
 
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+    }
+
+    public String getOwnerName(){
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName){
+        this.ownerName = ownerName;
+    }
 
 }
+//private List<Cafe> cafes;
