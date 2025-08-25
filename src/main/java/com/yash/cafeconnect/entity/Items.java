@@ -4,7 +4,7 @@ public class Items {
 
     private int itemId;
     private int itemQuantity;
-    private long price;
+    private float price;
     private int menuId;
     private String description;
 
@@ -12,7 +12,7 @@ public class Items {
 
     }
 
-    public Items(int itemId, int itemQuantity, long price, int menuId, String description) {
+    public Items(int itemId, int itemQuantity, float price, int menuId, String description) {
         this.itemId = itemId;
         this.itemQuantity = itemQuantity;
         this.price = price;
@@ -36,11 +36,11 @@ public class Items {
         this.itemQuantity = itemQuantity;
     }
 
-    public long getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

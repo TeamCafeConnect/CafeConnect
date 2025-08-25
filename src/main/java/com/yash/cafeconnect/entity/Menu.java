@@ -4,15 +4,15 @@ package com.yash.cafeconnect.entity;
 public class Menu {
     private int menuId;
     private int cafeId;
-     private int dishName;
-     private long price;
+     private String dishName;
+     private double price;
      private String description;
      private int itemId;
 
      public Menu(){
 
      }
-    public Menu(int menuId, int cafeId, int dishName, long price, String description, int itemId) {
+    public Menu(int menuId, int cafeId, String dishName, double price, String description, int itemId) {
         this.menuId = menuId;
         this.cafeId = cafeId;
         this.dishName = dishName;
@@ -40,19 +40,19 @@ public class Menu {
         this.cafeId = cafeId;
     }
 
-    public int getDishName() {
+    public String getDishName() {
         return dishName;
     }
 
-    public void setDishName(int dishName) {
+    public void setDishName(String dishName) {
         this.dishName = dishName;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
