@@ -15,7 +15,10 @@ public class Transaction {
     private int itemId;
     private int orderId;
 
-    public Transaction(int transactionId,float amount,String paymentMethod, TransactionStatus transactionStatus,Instant timeStamp,String userEmailId, int itemId, int orderId){
+    public Transaction() {
+    }
+
+    public Transaction(int transactionId, float amount, String paymentMethod, TransactionStatus transactionStatus, Instant timeStamp, String userEmailId, int itemId, int orderId){
         this.transactionId = transactionId;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
