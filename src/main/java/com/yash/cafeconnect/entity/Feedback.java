@@ -4,14 +4,17 @@ import java.util.Date;
 
 public class Feedback {
     private int feedbackId;
-    private int userEmailId;
+    private String userEmailId;
     private String content;
     private Date date;
     private int itemId;
     private int orderId;
     private int rating;
 
-    public Feedback(int feedbackId,int userEmailId, String content, Date date, int itemId, int orderId, int rating) {
+    public Feedback() {
+    }
+
+    public Feedback(int feedbackId, String userEmailId, String content, Date date, int itemId, int orderId, int rating) {
         this.feedbackId = feedbackId;
         this.userEmailId = userEmailId;
         this.content = content;
@@ -29,11 +32,11 @@ public class Feedback {
         this.feedbackId = feedbackId;
     }
 
-    public int getUserEmailId() {
+    public String getUserEmailId() {
         return userEmailId;
     }
 
-    public void setUserEmailId(int userEmailId) {
+    public void setUserEmailId(String userEmailId) {
         this.userEmailId = userEmailId;
     }
 
@@ -52,7 +55,6 @@ public class Feedback {
     public void setDate(Date date) {
         this.date = date;
     }
-
 
     public int getItemId() {
         return itemId;

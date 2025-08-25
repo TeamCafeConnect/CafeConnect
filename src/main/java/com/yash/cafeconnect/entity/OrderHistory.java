@@ -4,11 +4,14 @@ import java.time.Instant;
 
 public class OrderHistory {
     private int orderId;
-    private int userEmailId;
+    private String userEmailId;
     private float totalAmount;
     private Instant orderTime;
 
-    public OrderHistory(int orderId, int userEmailId, float totalAmount, Instant orderTime) {
+    public OrderHistory() {
+    }
+
+    public OrderHistory(int orderId, String userEmailId, float totalAmount, Instant orderTime) {
         this.orderId = orderId;
         this.userEmailId = userEmailId;
         this.totalAmount = totalAmount;
@@ -23,11 +26,11 @@ public class OrderHistory {
         this.orderId = orderId;
     }
 
-    public int getUserEmailId() {
+    public String getUserEmailId() {
         return userEmailId;
     }
 
-    public void setUserEmailId(int userEmailId) {
+    public void setUserEmailId(String userEmailId) {
         this.userEmailId = userEmailId;
     }
 
