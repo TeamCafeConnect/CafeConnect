@@ -4,14 +4,14 @@ public class Cart {
 
     private int itemId;
     private int itemQuantity;
-    private float totalAmount;
+    private double totalAmount;
     private int orderId;
     private String userEmailId;
     private int cartId;
 
     public Cart(){}
 
-    public Cart(int itemId, int itemQuantity, float totalAmount, int orderId, String userEmailId, int cartId) {
+    public Cart(int itemId, int itemQuantity, double totalAmount, int orderId, String userEmailId, int cartId) {
         this.itemId = itemId;
         this.itemQuantity = itemQuantity;
         this.totalAmount = totalAmount;
@@ -34,10 +34,10 @@ public class Cart {
         this.itemQuantity = itemQuantity;
      }
 
-     public float getTotalAmount(){
+     public double getTotalAmount(){
         return totalAmount;
      }
-     public void setTotalAmount(float totalAmount){
+     public void setTotalAmount(double totalAmount){
         this.totalAmount = totalAmount;
      }
 
