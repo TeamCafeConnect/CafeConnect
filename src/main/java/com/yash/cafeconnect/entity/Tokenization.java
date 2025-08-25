@@ -1,41 +1,41 @@
 package com.yash.cafeconnect.entity;
 
 public class Tokenization {
-    private int TokenId;
-    private String UserEmailId;
-    private int CartId;
+    private int tokenId;
+    private String userEmailId;
+    private int cartId;
 
     public Tokenization(){
 
     }
 
     public Tokenization(int tokenId, String userEmailId, int cartId) {
-        TokenId = tokenId;
-        UserEmailId = userEmailId;
-        CartId = cartId;
+        this.tokenId = tokenId;
+        this.userEmailId = userEmailId;
+        this.cartId = cartId;
     }
 
     public int getTokenId() {
-        return TokenId;
+        return tokenId;
     }
 
     public void setTokenId(int tokenId) {
-        TokenId = tokenId;
+        this.tokenId = tokenId;
     }
 
     public String getUserEmailId() {
-        return UserEmailId;
+        return userEmailId;
     }
 
     public void setUserEmailId(String userEmailId) {
-        UserEmailId = userEmailId;
+        this.userEmailId = userEmailId;
     }
 
     public int getCartId() {
-        return CartId;
+        return cartId;
     }
 
     public void setCartId(int cartId) {
-        CartId = cartId;
+        this.cartId = cartId;
     }
 }

@@ -21,12 +21,12 @@ public class MenuWeeklySchedule {
         this.menu = menu;
     }
 
-    public int getWeeklySchedueId() {
+    public int getWeeklyScheduleId() {
         return weeklyScheduleId;
     }
 
-    public void setWeeklySchedueId(int weeklySchedueId) {
-        this.weeklyScheduleId = weeklySchedueId;
+    public void setWeeklyScheduleId(int weeklyScheduleId) {
+        this.weeklyScheduleId = weeklyScheduleId;
     }
 
     public String getDescription() {

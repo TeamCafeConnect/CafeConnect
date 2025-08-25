@@ -5,14 +5,14 @@ public class Menu {
     private int menuId;
     private int cafeId;
      private String dishName;
-     private float price;
+     private double price;
      private String description;
      private int itemId;
 
      public Menu(){
 
      }
-    public Menu(int menuId, int cafeId, String dishName, float price, String description, int itemId) {
+    public Menu(int menuId, int cafeId, String dishName, double price, String description, int itemId) {
         this.menuId = menuId;
         this.cafeId = cafeId;
         this.dishName = dishName;
@@ -48,11 +48,11 @@ public class Menu {
         this.dishName = dishName;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

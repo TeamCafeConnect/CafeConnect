@@ -2,51 +2,52 @@ package com.yash.cafeconnect.entity;
 
 public class Inventory {
 
-    private int MaterialId;
-    private String CafeName;
-    private int QuantityAvailable;
-    private int UnitMeasurement;
+    private int materialId;
+    private String cafeName;
+    private int quantityAvailable;
+    private int unitMeasurement;
 
-    public Inventory(int materialId, String cafeName, int quantityAvailable, int unitMeasurement) {
-        MaterialId = materialId;
-        CafeName = cafeName;
-        QuantityAvailable = quantityAvailable;
-        UnitMeasurement = unitMeasurement;
-    }
 
     public Inventory(){
 
     }
 
+    public Inventory(int materialId, String cafeName, int quantityAvailable, int unitMeasurement) {
+        this.materialId = materialId;
+        this.cafeName = cafeName;
+        this.quantityAvailable = quantityAvailable;
+        this.unitMeasurement = unitMeasurement;
+    }
+
     public int getMaterialId() {
-        return MaterialId;
+        return materialId;
     }
 
     public void setMaterialId(int materialId) {
-        MaterialId = materialId;
+        this.materialId = materialId;
     }
 
     public String getCafeName() {
-        return CafeName;
+        return cafeName;
     }
 
     public void setCafeName(String cafeName) {
-        CafeName = cafeName;
+        this.cafeName = cafeName;
     }
 
     public int getQuantityAvailable() {
-        return QuantityAvailable;
+        return quantityAvailable;
     }
 
     public void setQuantityAvailable(int quantityAvailable) {
-        QuantityAvailable = quantityAvailable;
+        this.quantityAvailable = quantityAvailable;
     }
 
     public int getUnitMeasurement() {
-        return UnitMeasurement;
+        return unitMeasurement;
     }
 
     public void setUnitMeasurement(int unitMeasurement) {
-        UnitMeasurement = unitMeasurement;
+        this.unitMeasurement = unitMeasurement;
     }
 }
