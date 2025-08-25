@@ -38,4 +38,3 @@ public class Company {
     }
 
 }
-//private List<Cafe> cafes;

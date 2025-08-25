@@ -6,13 +6,13 @@ public class Cafe {
     private int cafeId;
     private String cafeName;
     private CafeStatus cafeStatus;
-    private Company company;
+    private int companyId;
 
-    public Cafe(int cafeId, String cafeName, CafeStatus cafeStatus, Company company){
+    public Cafe(int cafeId, String cafeName, CafeStatus cafeStatus, int companyId){
         this.cafeId = cafeId;
         this.cafeName = cafeName;
         this.cafeStatus = cafeStatus;
-        this.company = company;
+        this.companyId = companyId;
     }
 
     public Cafe(){}
@@ -41,5 +41,12 @@ public class Cafe {
         this.cafeStatus = cafeStatus;
     }
 
+    public int getCompanyId(){
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId){
+        this.companyId = companyId;
+    }
+
 }
-//private List<Menu> menuList;
