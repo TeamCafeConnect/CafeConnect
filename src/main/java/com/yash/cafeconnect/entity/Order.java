@@ -8,6 +8,9 @@ public class Order {
     private float totalAmount;
     private double expectedDeliveryTimeInMinutes;
 
+    public Order() {
+    }
+
     public Order(int orderId, String userEmailId, String cafeId, float totalAmount, double expectedDeliveryTimeInMinutes)
     {
         this.orderId = orderId;
