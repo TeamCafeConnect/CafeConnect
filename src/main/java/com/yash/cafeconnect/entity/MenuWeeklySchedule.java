@@ -1,30 +1,32 @@
 package com.yash.cafeconnect.entity;
+import com.yash.cafeconnect.entity.enums.MenuStatus;
+
 import java.time.DayOfWeek;
 
 public class MenuWeeklySchedule {
-    private int weeklySchedueId;
+    private int weeklyScheduleId;
     private String description;
     private DayOfWeek day;
-    private Menu menu;
+    private MenuStatus menu;
 
     public MenuWeeklySchedule(){
 
     }
 
 
-    public MenuWeeklySchedule(int weeklySchedueId, String description, DayOfWeek day, Menu menu) {
-        this.weeklySchedueId = weeklySchedueId;
+    public MenuWeeklySchedule(int weeklyScheduleId, String description, DayOfWeek day, MenuStatus menu) {
+        this.weeklyScheduleId = weeklyScheduleId;
         this.description = description;
         this.day = day;
         this.menu = menu;
     }
 
     public int getWeeklySchedueId() {
-        return weeklySchedueId;
+        return weeklyScheduleId;
     }
 
     public void setWeeklySchedueId(int weeklySchedueId) {
-        this.weeklySchedueId = weeklySchedueId;
+        this.weeklyScheduleId = weeklySchedueId;
     }
 
     public String getDescription() {
@@ -43,11 +45,11 @@ public class MenuWeeklySchedule {
         this.day = day;
     }
 
-    public Menu getMenu() {
+    public MenuStatus getMenu() {
         return menu;
     }
 
-    public void setMenu(Menu menu) {
+    public void setMenu(MenuStatus menu) {
         this.menu = menu;
     }
 }
