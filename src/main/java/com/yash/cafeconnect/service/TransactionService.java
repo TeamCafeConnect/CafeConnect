@@ -1,4 +1,4 @@
 package com.yash.cafeconnect.service;
 
-public class TransactionService {
+public interface TransactionService {
 }

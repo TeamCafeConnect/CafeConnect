@@ -1,4 +1,4 @@
 package com.yash.cafeconnect.service;
 
-public class FeedbackService {
+public interface FeedbackService {
 }

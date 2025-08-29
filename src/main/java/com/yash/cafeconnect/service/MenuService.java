@@ -1,4 +1,4 @@
 package com.yash.cafeconnect.service;
 
-public class MenuService {
+public interface MenuService {
 }
