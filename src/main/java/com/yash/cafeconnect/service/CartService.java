@@ -1,4 +1,4 @@
 package com.yash.cafeconnect.service;
 
-public class CartService {
+public interface CartService {
 }

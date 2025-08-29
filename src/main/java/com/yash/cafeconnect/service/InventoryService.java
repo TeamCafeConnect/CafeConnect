@@ -1,4 +1,4 @@
 package com.yash.cafeconnect.service;
 
-public class InventoryService {
+public interface InventoryService {
 }
