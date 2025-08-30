@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Transaction {
     private int transactionId;
-    private float amount;
+    private double amount;
     private String paymentMethod;
     private TransactionStatus transactionStatus;
     private Instant timeStamp;
@@ -15,7 +15,10 @@ public class Transaction {
     private int itemId;
     private int orderId;
 
-    public Transaction(int transactionId,float amount,String paymentMethod, TransactionStatus transactionStatus,Instant timeStamp,String userEmailId, int itemId, int orderId){
+    public Transaction() {
+    }
+
+    public Transaction(int transactionId, double amount, String paymentMethod, TransactionStatus transactionStatus, Instant timeStamp, String userEmailId, int itemId, int orderId){
         this.transactionId = transactionId;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
@@ -34,10 +37,10 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

@@ -5,10 +5,13 @@ public class Order {
     private int orderId;
     private String userEmailId;
     private String cafeId;
-    private float totalAmount;
+    private double totalAmount;
     private double expectedDeliveryTimeInMinutes;
 
-    public Order(int orderId, String userEmailId, String cafeId, float totalAmount, double expectedDeliveryTimeInMinutes)
+    public Order() {
+    }
+
+    public Order(int orderId, String userEmailId, String cafeId, double totalAmount, double expectedDeliveryTimeInMinutes)
     {
         this.orderId = orderId;
         this.userEmailId = userEmailId;
@@ -37,10 +40,10 @@ public class Order {
     public void setCafeId(String cafeId) {
         this.cafeId = cafeId;
     }
-    public float getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
-    public void setTotalAmount(float totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
     public double getExpectedDeliveryTimeInMinutes() {
