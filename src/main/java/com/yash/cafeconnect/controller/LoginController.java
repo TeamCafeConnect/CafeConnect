@@ -19,7 +19,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ViewResolver.forward(request, response, "Login");
+        ViewResolver.forward(request, response, "login");
     }
 
     @Override
