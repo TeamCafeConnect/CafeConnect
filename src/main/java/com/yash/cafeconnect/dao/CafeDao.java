@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CafeDao {
 
+
     //Saves a new Cafe
     void saveCafe(Cafe cafe);
 
@@ -27,4 +28,5 @@ public interface CafeDao {
     void deleteCafe(int cafeId);
 
     List<Cafe> getCafes();
+
 }
