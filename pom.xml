@@ -56,27 +56,6 @@
       <version>5.7.10</version>
     </dependency>
 
-    <!-- Spring Security Web -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-web</artifactId>
-      <version>5.7.10</version>
-    </dependency>
-
-    <!-- Spring Security Config -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-config</artifactId>
-      <version>5.7.10</version>
-    </dependency>
-
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <version>6.0.0</version><!-- or latest version, e.g., 6.1.0 -->
-      <scope>provided</scope>
-    </dependency>
-
 
     <!-- JSTL (optional, for JSP tag support) -->
     <dependency>
