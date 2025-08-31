@@ -33,7 +33,7 @@ public class Cafe {
         this.cafeName = cafeName;
     }
 
-    public CafeStatus getCafestatus(){
+    public CafeStatus getCafeStatus(){
         return cafeStatus ;
     }
 
