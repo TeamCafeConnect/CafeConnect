@@ -1,18 +1,18 @@
 package com.yash.cafeconnect.entity;
 
-import java.util.List;
-
 public class Office {
 
     private int officeId;
     private String officeName;
+    private String companyName;
     private String city;
 
     public Office(){}
 
-    public Office(int officeId, String officeName, String city){
+    public Office(int officeId, String officeName, String companyName, String city){
         this.officeId = officeId;
         this.officeName = officeName;
+        this.companyName = companyName;
         this.city = city;
     }
 
@@ -20,7 +20,7 @@ public class Office {
         return officeId;
     }
 
-    public void setOfficeId(int officeName){
+    public void setOfficeId(int officeId){
         this.officeId = officeId;
     }
 
@@ -32,11 +32,19 @@ public class Office {
         this.officeName = officeName;
     }
 
+    public String getCompanyName(){
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName){
+        this.companyName = companyName;
+    }
+
     public String getCity(){
         return city;
     }
 
-    public void setCity(String City){
+    public void setCity(String city){
         this.city = city;
     }
 
