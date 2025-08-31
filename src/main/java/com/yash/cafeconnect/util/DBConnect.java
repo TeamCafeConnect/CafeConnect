@@ -1,41 +1,110 @@
 package com.yash.cafeconnect.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnect {
+    private  static final String URL = "jdbc:mysql://localhost:3306/CafeConnect";
 
-    private static String url = "jdbc:mysql://localhost:3306/CafeConnect";
-    private static String user = "root";
-    private static String pass = "root";
+    /** Database username */
+    private static final String USER = "root";
 
-    static {
-        try{
+    /** Database password */
+   private static final String PASSWORD = "root";
+
+   private static  Connection con = null;
+
+
+
+
+
+    /**
+     * Opens and returns a database connection.
+
+     */
+
+    public Connection openConnection() {
+
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
 
-    }
-
-    private static Connection conn = null;
-
-    public static Connection getConn(){
-        try{
-            if(conn == null) {
-                conn = DriverManager.getConnection(url,user,pass);
+            if (con == null) {
+                con = DriverManager.getConnection(URL, USER, PASSWORD);
             }
-            if(conn.isClosed()){
-                conn = DriverManager.getConnection(url,user,pass);
+            if (con.isClosed()) {
+                con = DriverManager.getConnection(URL, USER, PASSWORD);
             }
-
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex){
             ex.printStackTrace();
         }
-        return  conn;
+        return con;
+    }
+
+    /**
+     * Creates and returns a PreparedStatement for the given SQL string.
+
+     */
+    public PreparedStatement createPreparedStatement(String sql) {
+        try {
+            return openConnection().prepareStatement(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Closes the given PreparedStatement.
+     */
+    public void closePreparedStatement(PreparedStatement pstmt) {
+        try {
+            pstmt.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Executes a SQL query and returns a ResultSet.
+
+     */
+    public ResultSet createResultSet(Connection con,PreparedStatement pstmt,String query) {
+        try {
+
+            return openConnection().createStatement().executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
     }
+
+    /**
+     * Closes the given ResultSet.
+     */
+    public void closeResultSet(ResultSet rs) {
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Closes the database connection.
+     */
+    public void closeConnection() {
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
+
+
 }
