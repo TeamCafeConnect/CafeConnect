@@ -698,7 +698,7 @@
             </div>
             <div class="col-md-6 text-md-end">
                 <p class="mb-0">
-                    <i class="fas fa-code"></i> Developed with ❤️ by Yash Technology
+                    <i class="fas fa-code"></i> Developed by Team Cafe Connect
                 </p>
             </div>
         </div>
