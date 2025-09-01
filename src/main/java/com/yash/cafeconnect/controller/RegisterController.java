@@ -1,8 +1,5 @@
 package com.yash.cafeconnect.controller;
 
-
-import com.yash.cafeconnect.config.ViewResolver;
-import com.yash.cafeconnect.dao.UserDao;
 import com.yash.cafeconnect.entity.User;
 import com.yash.cafeconnect.entity.enums.UserRoles;
 import com.yash.cafeconnect.service.UserService;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 
 @WebServlet("/register")
