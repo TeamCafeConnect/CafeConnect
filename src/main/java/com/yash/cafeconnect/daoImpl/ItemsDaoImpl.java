@@ -70,7 +70,7 @@ public class ItemsDaoImpl implements ItemsDao {
                     Items item = new Items();
                     item.setItemId(rs.getInt("itemId"));
                     item.setItemQuantity(rs.getInt("itemQuantity"));
-                    item.setPrice(rs.getDouble("price"));
+                    item.setPrice(rs.getFloat("price"));
                     item.setMenuId(rs.getInt("menuId"));
                     item.setDescription(rs.getString("description"));
                     return item;
@@ -81,5 +81,18 @@ public class ItemsDaoImpl implements ItemsDao {
         }
         return null;
 
+    }
+
+    @Override
+    public void deleteItem(int ItemId) {
+        String sql = "delete from items where ItemId = ?";
+        try(Connection connection = getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1,ItemId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }

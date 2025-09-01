@@ -11,7 +11,7 @@ import static java.sql.DriverManager.getConnection;
 
 public class MenuDaoImpl implements MenuDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/cafe";
+    private static final String URL = "jdbc:mysql://localhost:3306/cafeconnect";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
@@ -89,7 +89,7 @@ public class MenuDaoImpl implements MenuDao {
         }
         catch (Exception e)
         {
-            e.pri
+            e.printStackTrace();
 
         }
 

@@ -32,9 +32,23 @@ public class ItemsServiceImpl  implements ItemService {
         if (itemsDao.getItemById(item.getItemId()) == null) {
             throw new IllegalStateException("Item with this Id does not exist");
         }
+        itemsDao.updateItems(item);
 
 
     }
 
+    @Override
+    public Items getItemById(int ItemId) {
 
+        return itemsDao.getItemById(ItemId);
+    }
+
+    @Override
+    public void deleteItem(int ItemId) {
+        if (itemsDao.getItemById(ItemId) == null) {
+            throw new IllegalArgumentException("Id does not exist");
+        }
+        itemsDao.deleteItem(ItemId);
+
+    }
 }

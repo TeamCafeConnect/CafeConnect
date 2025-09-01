@@ -10,5 +10,7 @@ public interface ItemsDao {
 
     Items getItemById(int ItemId);
 
+    void deleteItem(int ItemId);
+
 
 }

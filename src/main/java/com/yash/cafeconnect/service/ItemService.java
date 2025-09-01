@@ -7,4 +7,8 @@ public interface ItemService {
     void addItems(Items items);
 
     void updateItem(Items items);
+
+    Items getItemById(int ItemId);
+
+    void deleteItem(int ItemId);
 }
