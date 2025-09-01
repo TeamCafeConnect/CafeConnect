@@ -1,7 +1,6 @@
 package com.yash.cafeconnect.controller;
 
 
-import com.yash.cafeconnect.config.ViewResolver;
 import com.yash.cafeconnect.entity.User;
 import com.yash.cafeconnect.entity.dto.UserLoginModel;
 import com.yash.cafeconnect.entity.enums.UserRoles;
