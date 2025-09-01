@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface UserService {
     // Add a new User
-    void addUser(User user);
+    String addUser(User user);
     // Get User by EmailId
     User getUserByEmailId(String emailId);
     // Update User details
