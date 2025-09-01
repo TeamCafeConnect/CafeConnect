@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Implementation of UserDao
  */
 public class UserDaoImpl implements UserDao {
-    private static final String URL = "jdbc:mysql://localhost:3306/cafe";
+    private static final String URL = "jdbc:mysql://localhost:3306/cafeconnect";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     static {
