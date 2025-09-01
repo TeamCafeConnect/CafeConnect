@@ -2,77 +2,112 @@ package com.yash.cafeconnect.util;
 
 import java.sql.*;
 
+
+
 public class DBConnect {
-    static final String URL = "jdbc:mysql://localhost:3306/employeedb";
-    static final String USER = "root";
-    static final String PASSWORD = "root";
-    private Connection con = null;
+    private static final String URL = "jdbc:mysql://localhost:3306/cafe_connect";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-
-    static {
+    /**
+     * Creates and returns a new database connection
+     * @return Connection object or null if connection fails
+     */
+    public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch
-        (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Connection openConnection() {
-        try {
-            if (con == null) {
-                con = DriverManager.getConnection(URL, USER, PASSWORD);
-            }
-            if (con.isClosed()) {
-                con = DriverManager.getConnection(URL, USER, PASSWORD);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return con;
-    }
-
-    public PreparedStatement
-    createPreparedStatement(String sql) {
-        try {
-            return openConnection().prepareStatement(sql);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex.getMessage());
-        }
-    }
-
-    public void closePreparedStatement(PreparedStatement pstmt) {
-        try {
-            pstmt.close();
-        } catch (SQLException ex) {
-        }
-    }
-
-    public ResultSet createResultSet(String query) {
-        try {
-
-            return openConnection().createStatement().executeQuery(query);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
+            System.err.println("Failed to create connection: " + e.getMessage());
             e.printStackTrace();
-            throw new RuntimeException(e);
+            return null;
         }
-
     }
 
-    public void closeResultSet(ResultSet rs) {
+    /**
+     * Creates a Statement from the given connection
+     * @param connection The database connection
+     * @return Statement object or null if creation fails
+     */
+    public static Statement getStatement(Connection connection) {
         try {
-            rs.close();
-        } catch (SQLException ex) {
+            if (connection == null) {
+                System.err.println("Connection is null, cannot create Statement");
+                return null;
+            }
+            return connection.createStatement();
+        } catch (SQLException e) {
+            System.err.println("Failed to create Statement: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public void closeConnection() {
+    /**
+     * Creates a PreparedStatement from the given connection and SQL
+     * @param connection The database connection
+     * @param sql The SQL query string
+     * @return PreparedStatement object or null if creation fails
+     */
+    public static PreparedStatement getPreparedStatement(Connection connection, String sql) {
         try {
-            con.close();
-        } catch (SQLException ex) {
+            if (connection == null) {
+                System.err.println("Connection is null, cannot create PreparedStatement");
+                return null;
+            }
+            if (sql == null || sql.trim().isEmpty()) {
+                System.err.println("SQL query is null or empty");
+                return null;
+            }
+            return connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            System.err.println("Failed to create PreparedStatement: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 
+    /**
+     * Safely closes a Statement
+     * @param statement The Statement to close
+     */
+    public static void closeStatement(Statement statement) {
+        try {
+            if (statement != null && !statement.isClosed()) {
+                statement.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing Statement: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Safely closes a PreparedStatement
+     * @param preparedStatement The PreparedStatement to close
+     */
+    public static void closePreparedStatement(PreparedStatement preparedStatement) {
+        try {
+            if (preparedStatement != null && !preparedStatement.isClosed()) {
+                preparedStatement.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing PreparedStatement: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Safely closes a Connection
+     * @param connection The Connection to close
+     */
+    public static void closeConnection(Connection connection) {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing Connection: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
