@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface UserDao {
     // Saves a new User
-    void saveUser(User user);
+    String saveUser(User user);
 
     /**
      * Retrieves User based on emailId.

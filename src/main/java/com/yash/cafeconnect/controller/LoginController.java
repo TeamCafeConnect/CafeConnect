@@ -2,8 +2,14 @@ package com.yash.cafeconnect.controller;
 
 
 import com.yash.cafeconnect.config.ViewResolver;
+import com.yash.cafeconnect.entity.User;
+import com.yash.cafeconnect.entity.dto.UserLoginModel;
+import com.yash.cafeconnect.entity.enums.UserRoles;
+import com.yash.cafeconnect.service.UserService;
+import com.yash.cafeconnect.serviceImpl.UserServiceImpl;
 
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +21,13 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 
+    private UserService userService=new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ViewResolver.forward(request, response, "login");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -27,16 +35,31 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String emailId = request.getParameter("emailId");
         String password = request.getParameter("password");
+        UserLoginModel userLoginModel=userService.authenticateUser(emailId,password);
+        RequestDispatcher dispatcher;
 
-        // This is dummy implementation need to connect with service
-        if ("admin@yash.com".equals(emailId) && "admin123".equals(password)) {
-            request.setAttribute("emailId", emailId);
-            ViewResolver.forward(request, response, "home");
-        } else {
-            request.setAttribute("error", "Invalid username or password!");
-            ViewResolver.forward(request, response, "login");
+        if(userLoginModel.getMessage().equals("SUCCESS"))
+        {
+            UserRoles userRoles=userLoginModel.getUser().getUserRoles();
+            User user=userLoginModel.getUser();
+            request.getSession().setAttribute("user", user);
+
+            if(userRoles.equals(UserRoles.CUSTOMER))
+            {
+                dispatcher = request.getRequestDispatcher("user_dashboard.jsp");
+
+            }else if(userRoles.equals(UserRoles.ADMIN))
+            {
+                dispatcher = request.getRequestDispatcher("admin.jsp");
+
+            }else {
+                dispatcher = request.getRequestDispatcher("cafe_dashboard.jsp");
+            }
+        }else {
+            request.setAttribute("message",userLoginModel.getMessage());
+            dispatcher = request.getRequestDispatcher("login.jsp");
         }
+
+        dispatcher.forward(request, response);
     }
-
-
 }

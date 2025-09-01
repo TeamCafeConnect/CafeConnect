@@ -8,6 +8,7 @@ import com.yash.cafeconnect.entity.enums.UserRoles;
 import com.yash.cafeconnect.service.UserService;
 import com.yash.cafeconnect.serviceImpl.UserServiceImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet("/login")
+@WebServlet("/register")
 public class RegisterController extends HttpServlet {
 
     private UserService userService;
@@ -41,7 +42,16 @@ public class RegisterController extends HttpServlet {
         String mobileNo=request.getParameter("mobileNo");
         int officeId=Integer.parseInt(request.getParameter("officeId"));
         User user=new User(emailId,name,mobileNo,password,officeId, UserRoles.CUSTOMER);
+        String message=userService.addUser(user);
+        request.setAttribute("message",message);
+        RequestDispatcher dispatcher;
 
+        if(message.equals("SUCCESS")) {
+            dispatcher = request.getRequestDispatcher("login.jsp");
+         }else {
+            dispatcher = request.getRequestDispatcher("register.jsp");
+        }
+        dispatcher.forward(request, response);
     }
 
 

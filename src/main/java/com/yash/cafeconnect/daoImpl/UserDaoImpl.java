@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
-    public void saveUser(User user) {
+    public String saveUser(User user) {
         String sql = "INSERT INTO user (emailId, name, mobileNo, password, officeId, userRoles) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -34,8 +34,10 @@ public class UserDaoImpl implements UserDao {
             pstmt.setInt(5, user.getOfficeId());
             pstmt.setString(6, user.getUserRoles().name());
             pstmt.executeUpdate();
+            return "SUCCESS";
         } catch(SQLException e) {
             e.printStackTrace();
+            return "FAILED";
         }
     }
     public User getUser(String emailId) {
