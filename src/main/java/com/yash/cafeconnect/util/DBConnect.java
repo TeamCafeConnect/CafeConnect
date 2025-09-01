@@ -2,8 +2,6 @@ package com.yash.cafeconnect.util;
 
 import java.sql.*;
 
-
-
 public class DBConnect {
     private static final String URL = "jdbc:mysql://localhost:3306/cafe_connect";
     private static final String USER = "root";
@@ -111,3 +109,4 @@ public class DBConnect {
         }
     }
 }
+
