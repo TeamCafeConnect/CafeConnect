@@ -3,31 +3,23 @@ package com.yash.cafeconnect.util;
 import java.sql.*;
 
 public class DBConnect {
-    private  static final String URL = "jdbc:mysql://localhost:3306/cafe_connect";
-
-    /** Database username */
-    private static final String USER = "cafe_manager";
-
-    /** Database password */
-   private static final String PASSWORD = "cafe@2025";
-
-   private static  Connection con = null;
+    static final String URL = "jdbc:mysql://localhost:3306/employeedb";
+    static final String USER = "root";
+    static final String PASSWORD = "root";
+    private Connection con = null;
 
 
-
-
-
-    /**
-     * Opens and returns a database connection.
-
-     */
-
-    public Connection openConnection() {
-
-
+    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch
+        (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public Connection openConnection() {
+        try {
             if (con == null) {
                 con = DriverManager.getConnection(URL, USER, PASSWORD);
             }
@@ -36,17 +28,12 @@ public class DBConnect {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } catch (ClassNotFoundException ex){
-            ex.printStackTrace();
         }
         return con;
     }
 
-    /**
-     * Creates and returns a PreparedStatement for the given SQL string.
-
-     */
-    public PreparedStatement createPreparedStatement(String sql) {
+    public PreparedStatement
+    createPreparedStatement(String sql) {
         try {
             return openConnection().prepareStatement(sql);
         } catch (SQLException ex) {
@@ -55,23 +42,14 @@ public class DBConnect {
         }
     }
 
-    /**
-     * Closes the given PreparedStatement.
-     */
     public void closePreparedStatement(PreparedStatement pstmt) {
         try {
             pstmt.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex.getMessage());
         }
     }
 
-    /**
-     * Executes a SQL query and returns a ResultSet.
-
-     */
-    public ResultSet createResultSet(Connection con,PreparedStatement pstmt,String query) {
+    public ResultSet createResultSet(String query) {
         try {
 
             return openConnection().createStatement().executeQuery(query);
@@ -82,27 +60,17 @@ public class DBConnect {
 
     }
 
-    /**
-     * Closes the given ResultSet.
-     */
     public void closeResultSet(ResultSet rs) {
         try {
             rs.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex.getMessage());
         }
     }
 
-    /**
-     * Closes the database connection.
-     */
     public void closeConnection() {
         try {
             con.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex.getMessage());
         }
     }
 
