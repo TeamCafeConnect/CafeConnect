@@ -1,5 +1,6 @@
 package com.yash.cafeconnect.controller;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,8 @@ public class LogoutController  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       request.getSession().invalidate();
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+      dispatcher.forward(request, response);
     }
 
 }
