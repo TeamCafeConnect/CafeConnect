@@ -1,8 +1,17 @@
 package com.yash.cafeconnect.dao;
 
 import com.yash.cafeconnect.entity.Cafe;
+import com.yash.cafeconnect.entity.Menu;
 
 public interface MenuDao {
 
-    boolean addMenu(Cafe cafe);
-}
+    void addMenu(Menu menu);
+
+    Menu getMenuById(int MenuId);
+
+    void updateMenu(Menu menu);
+
+    void deleteMenu(int menuId);
+
+
+    }
