@@ -8,7 +8,12 @@ import com.yash.cafeconnect.service.MenuService;
 
 public class MenuServiceImpl implements MenuService {
 
-    private MenuDao menuDao = new MenuDaoImpl();
+    private final MenuDao menuDao;
+
+
+    public MenuServiceImpl() {
+        this.menuDao = new MenuDaoImpl();
+    }
 
     @Override
     public void addMenu(Menu menu) {
@@ -32,23 +37,22 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void updateMenu(Menu menu) {
-        if (menu.getDishName() == null || menu.getDishName().isEmpty()) {
-            throw new IllegalArgumentException("Dish name cannot be empty");
+        if (menu.getMenuId() <= 0) {
+            throw new IllegalArgumentException("Menu ID must be positive for update");
         }
-        Menu existingMenu = menuDao.getMenuById(menu.getMenuId());
-        if (existingMenu == null) {
-            throw new IllegalStateException("Menu with this ID does not exist");
+        if (menu.getDishName() == null || menu.getDishName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Dish name cannot be empty");
         }
         menuDao.updateMenu(menu);
     }
 
     @Override
     public void deleteMenu(int MenuId) {
-        Menu existingMenu = menuDao.getMenuById(MenuId);
-        if (existingMenu == null) {
-            throw new IllegalStateException("Menu with this ID does not exist");
+        if (MenuId <= 0) {
+            throw new IllegalArgumentException("Menu ID must be positive for delete");
         }
         menuDao.deleteMenu(MenuId);
+    }
 
     }
-}
+

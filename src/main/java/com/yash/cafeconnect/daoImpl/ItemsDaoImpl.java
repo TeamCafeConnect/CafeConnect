@@ -2,97 +2,116 @@ package com.yash.cafeconnect.daoImpl;
 
 import com.yash.cafeconnect.dao.ItemsDao;
 import com.yash.cafeconnect.entity.Items;
+import com.yash.cafeconnect.util.DBConnect;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ItemsDaoImpl implements ItemsDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/cafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-
-    static{
-        try{
-            Class.forName("com.mysql.cj.Driver");
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-        }
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL,USER,PASSWORD);
-    }
-
     @Override
     public void addItems(Items item) {
-        String sql = "Insert into Items(itemId,itemQuantity,price,menuId,description)values (?,?,?,?,?)";
-        try(Connection connection = getConnection();
-            PreparedStatement pst = connection.prepareStatement(sql)){
-            pst.setInt(1, item.getItemId());
-            pst.setInt(2, item.getItemQuantity());
-            pst.setDouble(3, item.getPrice());
-            pst.setInt(4, item.getMenuId());
-            pst.setString(5, item.getDescription());
-            pst.executeUpdate();
-
-        }
-        catch (Exception e){
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "INSERT INTO items (item_quantity, price, menu_id, description) VALUES (?, ?, ?, ?)";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, item.getItemQuantity());
+            pstmt.setDouble(2, item.getPrice());
+            pstmt.setInt(3, item.getMenuId());
+            pstmt.setString(4, item.getDescription());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
-
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
+
     }
 
     @Override
     public void updateItems(Items item) {
-        String sql = "UPDATE Items SET itemQuantity = ?, price = ?, menuId = ?, description = ? WHERE itemId = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement pst = connection.prepareStatement(sql)) {
-            pst.setInt(1, item.getItemQuantity());
-            pst.setDouble(2, item.getPrice());
-            pst.setInt(3, item.getMenuId());
-            pst.setString(4, item.getDescription());
-            pst.setInt(5, item.getItemId());
-            pst.executeUpdate();
-        } catch (Exception e) {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "UPDATE items SET item_quantity = ?, price = ?, menu_id = ?, description = ? WHERE item_id = ?";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, item.getItemQuantity());
+            pstmt.setFloat(2, item.getPrice());
+            pstmt.setInt(3, item.getMenuId());
+            pstmt.setString(4, item.getDescription());
+            pstmt.setInt(5, item.getItemId());
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated == 0) {
+                System.out.println("No item found with ID " + item.getItemId());
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
+
     }
 
     @Override
     public Items getItemById(int ItemId) {
-
-        String sql = "SELECT * FROM Items WHERE itemId = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement pst = connection.prepareStatement(sql)) {
-            pst.setInt(1, ItemId);
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    Items item = new Items();
-                    item.setItemId(rs.getInt("itemId"));
-                    item.setItemQuantity(rs.getInt("itemQuantity"));
-                    item.setPrice(rs.getFloat("price"));
-                    item.setMenuId(rs.getInt("menuId"));
-                    item.setDescription(rs.getString("description"));
-                    return item;
-                }
+        Items item = null;
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "SELECT item_id, item_quantity, price, menu_id, description FROM items WHERE item_id = ?";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, ItemId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                item = new Items();
+                item.setItemId(rs.getInt("item_id"));
+                item.setItemQuantity(rs.getInt("item_quantity"));
+                item.setPrice(rs.getFloat("price"));
+                item.setMenuId(rs.getInt("menu_id"));
+                item.setDescription(rs.getString("description"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
-        return null;
-
+        return item;
     }
 
     @Override
     public void deleteItem(int ItemId) {
-        String sql = "delete from items where ItemId = ?";
-        try(Connection connection = getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setInt(1,ItemId);
-            pstmt.executeUpdate();
-        }
-        catch(SQLException e){
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "DELETE FROM items WHERE item_id = ?";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, ItemId);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted == 0) {
+                System.out.println("No item found with ID " + ItemId + " to delete.");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
+
     }
 }

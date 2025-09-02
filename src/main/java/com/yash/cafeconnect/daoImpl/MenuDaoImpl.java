@@ -1,7 +1,6 @@
 package com.yash.cafeconnect.daoImpl;
 
 import com.yash.cafeconnect.dao.MenuDao;
-import com.yash.cafeconnect.entity.Cafe;
 import com.yash.cafeconnect.entity.Menu;
 import com.yash.cafeconnect.util.DBConnect;
 
@@ -11,86 +10,86 @@ import static java.sql.DriverManager.getConnection;
 
 public class MenuDaoImpl implements MenuDao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/cafeconnect";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
-
-    static{
-        try{
-            Class.forName("com.mysql.cj.Driver");
-        }catch(ClassNotFoundException e){
-            e.printStackTrace();
-        }
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL,USER,PASSWORD);
-    }
 
     @Override
     public void addMenu(Menu menu) {
-        String query = "insert into Menu(menuId,cafeId,dishName,price,description,itemId) values(?,?,?,?,?,?)";
-       try(Connection connection = getConnection();
-       PreparedStatement pst = connection.prepareStatement(query)){
-           pst.setInt(1,menu.getMenuId());
-           pst.setInt(2,menu.getCafeId());
-           pst.setString(3,menu.getDishName());
-           pst.setDouble(4,menu.getPrice());
-           pst.setString(5,menu.getDescription());
-           pst.setInt(6,menu.getItemId());
-           pst.executeUpdate();
-           
-
-
-       }catch (Exception e)
-       {
-           e.printStackTrace();
-       }
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "INSERT INTO menu (cafe_id, dish_name, price, description, item_id) VALUES (?, ?, ?, ?, ?)";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, menu.getCafeId());
+            pstmt.setString(2, menu.getDishName());
+            pstmt.setDouble(3, menu.getPrice());
+            pstmt.setString(4, menu.getDescription());
+            pstmt.setInt(5, menu.getItemId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
+        }
     }
 
     @Override
     public Menu getMenuById(int MenuId) {
-        String query = "SELECT * FROM Menu WHERE menuId = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement pst = connection.prepareStatement(query)) {
-            pst.setInt(1, MenuId);
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    Menu menu = new Menu();
-                    menu.setMenuId(rs.getInt("menuId")); // always set ID
-                    menu.setCafeId(rs.getInt("cafeId"));
-                    menu.setDishName(rs.getString("dishName"));
-                    menu.setPrice(rs.getDouble("price"));
-                    menu.setDescription(rs.getString("description"));
-                    menu.setItemId(rs.getInt("itemId"));
-                    return menu;
-                }
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            connection = DBConnect.getConnection();
+            pstmt = DBConnect.getPreparedStatement(connection, "SELECT * FROM menu WHERE menu_id = ?");
+            pstmt.setInt(1, MenuId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Menu(
+                        rs.getInt("menu_id"),
+                        rs.getInt("cafe_id"),
+                        rs.getString("dish_name"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("item_id")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
         return null;
     }
 
     @Override
     public void updateMenu(Menu menu) {
-        String query = "Update Menu set cafeId = ?, dishName = ?,price = ?, description = ?, itemId = ? where menuId=?";
-        try(Connection connection = getConnection();
-            PreparedStatement pst = connection.prepareStatement(query)){
-            pst.setInt(1,menu.getCafeId());
-            pst.setString(2,menu.getDishName());
-            pst.setDouble(3,menu.getPrice());
-            pst.setString(4,menu.getDescription());
-            pst.setInt(5,menu.getItemId());
-            pst.setInt(6,menu.getMenuId());
-
-            pst.executeUpdate();
-
-        }
-        catch (Exception e)
-        {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "UPDATE menu SET cafe_id = ?, dish_name = ?, price = ?, description = ?, item_id = ? WHERE menu_id = ?";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, menu.getCafeId());
+            pstmt.setString(2, menu.getDishName());
+            pstmt.setDouble(3, menu.getPrice());
+            pstmt.setString(4, menu.getDescription());
+            pstmt.setInt(5, menu.getItemId());
+            pstmt.setInt(6, menu.getMenuId()); // assuming menuId is primary key
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No menu found with id " + menu.getMenuId());
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
 
 
@@ -98,17 +97,22 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public void deleteMenu(int menuId) {
-        String sql = "DELETE FROM Menu WHERE menuId = ?";
-        try(Connection connection = getConnection();
-            PreparedStatement pst = connection.prepareStatement(sql)){
-            pst.setInt(1,menuId);
-            pst.executeUpdate();
-
-
-        }
-        catch (Exception e)
-        {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = DBConnect.getConnection();
+            String sql = "DELETE FROM menu WHERE menu_id = ?";
+            pstmt = DBConnect.getPreparedStatement(connection, sql);
+            pstmt.setInt(1, menuId);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected == 0) {
+                System.out.println("No menu found with ID " + menuId + " to delete.");
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnect.closePreparedStatement(pstmt);
+            DBConnect.closeConnection(connection);
         }
 
     }
