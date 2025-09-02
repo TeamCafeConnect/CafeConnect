@@ -41,6 +41,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
     public User getUser(String emailId) {
+        System.out.println("User Fetched");
         String sql = "SELECT * FROM user WHERE emailId = ?";
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
