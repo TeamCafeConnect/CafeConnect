@@ -18,10 +18,6 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void addMenu(Menu menu) {
 
-        if (menu.getDishName() == null || menu.getDishName().isEmpty()) {
-            throw new IllegalArgumentException("Dish name cannot be empty");
-        }
-
         Menu existingMenu = menuDao.getMenuById(menu.getMenuId());
         if (existingMenu != null) {
             throw new IllegalStateException("Menu with this ID already exists");
@@ -39,9 +35,6 @@ public class MenuServiceImpl implements MenuService {
     public void updateMenu(Menu menu) {
         if (menu.getMenuId() <= 0) {
             throw new IllegalArgumentException("Menu ID must be positive for update");
-        }
-        if (menu.getDishName() == null || menu.getDishName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Dish name cannot be empty");
         }
         menuDao.updateMenu(menu);
     }

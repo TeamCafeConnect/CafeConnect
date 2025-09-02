@@ -17,11 +17,9 @@ public class MenuDaoImpl implements MenuDao {
         PreparedStatement pstmt = null;
         try {
             connection = DBConnect.getConnection();
-            String sql = "INSERT INTO menu (cafe_id, dish_name, price, description, item_id) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO menu (cafe_id, description, item_id) VALUES (?, ?, ?, ?, ?)";
             pstmt = DBConnect.getPreparedStatement(connection, sql);
             pstmt.setInt(1, menu.getCafeId());
-            pstmt.setString(2, menu.getDishName());
-            pstmt.setDouble(3, menu.getPrice());
             pstmt.setString(4, menu.getDescription());
             pstmt.setInt(5, menu.getItemId());
             pstmt.executeUpdate();
@@ -47,10 +45,7 @@ public class MenuDaoImpl implements MenuDao {
                 return new Menu(
                         rs.getInt("menu_id"),
                         rs.getInt("cafe_id"),
-                        rs.getString("dish_name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("item_id")
+                        rs.getString("description")
                 );
             }
         } catch (SQLException e) {
@@ -73,11 +68,9 @@ public class MenuDaoImpl implements MenuDao {
         PreparedStatement pstmt = null;
         try {
             connection = DBConnect.getConnection();
-            String sql = "UPDATE menu SET cafe_id = ?, dish_name = ?, price = ?, description = ?, item_id = ? WHERE menu_id = ?";
+            String sql = "UPDATE menu SET cafe_id = ?,  description = ?, item_id = ? WHERE menu_id = ?";
             pstmt = DBConnect.getPreparedStatement(connection, sql);
             pstmt.setInt(1, menu.getCafeId());
-            pstmt.setString(2, menu.getDishName());
-            pstmt.setDouble(3, menu.getPrice());
             pstmt.setString(4, menu.getDescription());
             pstmt.setInt(5, menu.getItemId());
             pstmt.setInt(6, menu.getMenuId()); // assuming menuId is primary key
