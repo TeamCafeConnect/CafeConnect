@@ -1,0 +1,117 @@
+name: Deploy to Production Server
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Deploy to Production Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_PRIVATE_KEY }}
+          port: 22
+          script: |
+            set -e  # Exit on any error
+            echo "🚀 Starting deployment..."
+            
+            # Navigate to project directory
+            cd ~/CafeConnect || { echo "❌ Failed to navigate to CafeConnect directory"; exit 1; }
+            
+            # Check current branch
+            echo "📍 Current branch: $(git branch --show-current)"
+            
+            # Stash any local changes (if any)
+            echo "💾 Stashing any local changes..."
+            git stash || true
+            
+            # Pull latest changes
+            echo "⬇️ Pulling latest changes from production branch..."
+            git pull origin production || { echo "❌ Failed to pull from production branch"; exit 1; }
+            
+            # Check Java version
+            echo "☕ Java version:"
+            java -version || { echo "❌ Java not found"; exit 1; }
+            
+            # Check Maven version
+            echo "🔧 Maven version:"
+            mvn -version || { echo "❌ Maven not found"; exit 1; }
+            
+            # Clean and build
+            echo "🏗️ Building project with Maven..."
+            mvn clean install || { echo "❌ Maven build failed"; exit 1; }
+            
+            # Optional: Restart application service (uncomment if you have a service)
+            # echo "🔄 Restarting application service..."
+            # systemctl restart cafeconnect || { echo "❌ Failed to restart service"; exit 1; }
+            
+            echo "✅ Deployment completed successfully!"
+            echo "📊 Build artifacts:"
+            ls -la target/ || true
+
+      - name: Notify deployment status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Deployment to production server completed successfully!"
+            echo "🌐 Server: ${{ secrets.SERVER_HOST }}"
+            echo "📦 Project: CafeConnect"
+            echo "🔀 Branch: production"
+          else
+            echo "❌ Deployment failed!"
+            echo "🔍 Check the logs above for error details"
+          fi
+
+      - name: Send Email Notification
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: |
+            CafeConnect Deployment ${{ job.status == 'success' && '✅ SUCCESS' || '❌ FAILED' }}
+          body: |
+            🚀 CafeConnect Deployment Report
+            
+            📊 Status: ${{ job.status == 'success' && '✅ SUCCESS' || '❌ FAILED' }}
+            📁 Repository: ${{ github.repository }}
+            🌿 Branch: ${{ github.ref_name }}
+            💾 Commit: ${{ github.sha }}
+            🕐 Time: ${{ github.event.head_commit.timestamp }}
+            👤 Author: ${{ github.event.head_commit.author.name }}
+            
+            📝 Commit Message: "${{ github.event.head_commit.message }}"
+            
+            ${{ job.status == 'success' && '✅ Deployment completed successfully! Your CafeConnect application has been updated on the production server.' || '❌ Deployment failed! Please check the logs for error details and fix the issues before the next deployment.' }}
+            
+            🔗 View full details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            🖥️ Server: 194.238.17.235
+            
+            ---
+            This is an automated message from CafeConnect CI/CD Pipeline
+          to: mehuljain1590@gmail.com
+          from: CafeConnect CI/CD <lms.yashtechnology@gmail.com>
